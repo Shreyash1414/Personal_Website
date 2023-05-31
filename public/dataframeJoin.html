@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    # Creating sample dataframes
+df1 <- data.frame(ID = c(1, 2, 3, 4),
+                  Name = c("John", "Alice", "Bob", "Emma"),
+                  Age = c(25, 30, 35, 40))
+
+df2 <- data.frame(ID = c(2, 3, 5, 6),
+                  City = c("New York", "London", "Paris", "Tokyo"),
+                  Salary = c(5000, 6000, 7000, 8000))
+
+# Inner join
+inner_join <- merge(df1, df2, by = "ID", all = FALSE)
+print("Inner Join:")
+print(inner_join)
+
+# Left join
+left_join <- merge(df1, df2, by = "ID", all.x = TRUE)
+print("Left Join:")
+print(left_join)
+
+# Right join
+right_join <- merge(df1, df2, by = "ID", all.y = TRUE)
+print("Right Join:")
+print(right_join)
+
+# Full outer join
+full_join <- merge(df1, df2, by = "ID", all = TRUE)
+print("Full Outer Join:")
+print(full_join)
+</body>
+</html>
