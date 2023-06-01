@@ -7,13 +7,47 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>1) VCD</h2>
-    <p>#library(vcd)
-    </p>
-    <p>data(mtcars)</p>
-    <p>table_mtcars <- table(mtcars$cyl, mtcars$am)</p>
-    <p>print(table_mtcars)</p>
-    <p>mosaicplot(table_mtcars, main = "Cylinders vs. Transmission Type")</p>
+<pre>
+    1) VCD
+
+    # Install and load the vcd package
+    install.packages("vcd")
+    library(vcd)
+
+    # Create a contingency table
+    data <- table(Titanic)
+
+    # Create a mosaic plot
+    mosaic(data, shade = TRUE)
+
+    2)ggplot2
+
+    install.packages("ggplot2")
+    library(ggplot2)
+
+    # Create a scatter plot
+    ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+    geom_point()
+
+    3)multidplyr
+
+    install.packages("multidplyr")
+    library(multidplyr)
+
+    # Create a local data frame
+    df <- data.frame(x = 1:10, y = 11:20)
+
+    # Convert to a distributed data frame
+    ddf <- df %>% as.tbl_lazy() %>% partition(x)
+
+    # Perform parallel operations
+    result <- ddf %>%
+    group_by(x) %>%
+    mutate(z = x + y)
+
+    # Collect the result
+    collect(result)
+</pre>
 
 
 </body>
