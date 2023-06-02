@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <xmp>
+        1) XML file
+
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".writeText">
+
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="68dp"
+                android:layout_marginBottom="100dp"
+                android:text="Write to File"
+                app:layout_constraintBottom_toTopOf="@+id/button7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.526"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="140dp"
+                android:text="Read From File"
+                app:layout_constraintBottom_toTopOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.526"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="108dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.524"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="25dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/button6"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="1dp"
+                android:id="@+id/textInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="hint"
+                    android:id="@+id/input"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        2) Java file
+
+
+        package com.example.madexternal;
+
+        import androidx.appcompat.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.TextView;
+        import android.widget.Toast;
+
+        import com.google.android.material.textfield.TextInputEditText;
+
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileNotFoundException;
+        import java.io.FileOutputStream;
+
+        public class writeText extends AppCompatActivity {
+
+            Button writeBtn,readBtn;
+            TextInputEditText input;
+            TextView show;
+
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_write_text);
+
+                writeBtn= findViewById(R.id.button6);
+                readBtn = findViewById(R.id.button7);
+                input = findViewById(R.id.input);
+                show = findViewById(R.id.textView9);
+
+                writeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String content = input.getText().toString();
+                        writeToFile("file.txt",content);
+                    }
+                });
+
+                readBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String content = readFromFile("file.txt");
+                        show.setText(content);
+                    }
+                });
+
+
+
+
+            }
+
+            public String readFromFile(String fileName)
+            {
+                File path = getApplicationContext().getFilesDir();
+                File readFrom = new File(path,fileName);
+                byte[] content = new byte[(int) readFrom.length()];
+
+                try{
+                    FileInputStream stream = new FileInputStream(readFrom);
+                    stream.read(content);
+                    return new String(content);
+                }catch(Exception e)
+                {
+                    e.printStackTrace();
+                    return e.toString();
+                }
+            }
+
+            public void writeToFile(String fileName , String content){
+                File path = getApplicationContext().getFilesDir();
+                try{
+                    FileOutputStream writer = new FileOutputStream(new File(path,fileName));
+                    writer.write(content.getBytes());
+                    writer.close();
+                    Toast.makeText(getApplicationContext(), "Data Written in :"+fileName, Toast.LENGTH_LONG).show();
+
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    </xmp>>
+</body>
+</html>
