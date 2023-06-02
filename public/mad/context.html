@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <xmp>
+    1) XML code (MainActivity)
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <ListView
+            android:layout_width="368dp"
+            android:layout_height="495dp"
+            android:id="@+id/listView"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    2) Xml code (menu inside res/menu)
+
+    
+    <?xml version="1.0" encoding="utf-8"?>
+    <menu xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:title="Item3"
+            android:id="@+id/t2"/>
+        <item android:title="Item2"
+            android:id="@+id/t3"/>
+        <item android:id="@+id/t1"
+        android:title="Item 1"></item>
+    </menu>
+
+
+    3) java code
+
+    package com.example.myapplication;
+
+
+        import androidx.annotation.NonNull;
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.constraintlayout.widget.ConstraintLayout;
+
+        import android.content.Intent;
+        import android.graphics.Color;
+        import android.view.ContextMenu;
+        import android.view.Menu;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.os.Bundle;
+        import android.widget.ListView;
+        import android.widget.Toast;
+
+        public class MainActivity extends AppCompatActivity {
+            private ListView listView;
+            private ArrayAdapter<String> arrayAdapter;
+            private ConstraintLayout layout;
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_main);
+                listView= findViewById(R.id.listView);
+                String[] it={"abc","xyz","pqr"};
+                arrayAdapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, it);
+                listView.setAdapter(arrayAdapter);
+
+                registerForContextMenu(listView);
+            }
+
+
+
+            @Override
+            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                super.onCreateContextMenu(menu, v, menuInfo);
+                getMenuInflater().inflate(R.menu.menumain,menu);
+            }
+
+            @Override
+            public boolean onContextItemSelected( MenuItem item) {
+                AdapterView.AdapterContextMenuInfo info1=(AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                if(item.getItemId()==R.id.t1){
+                    Toast.makeText(getApplicationContext(),"item 1",Toast.LENGTH_LONG).show();
+                }
+                else if(item.getItemId()==R.id.t2){
+                    Toast.makeText(getApplicationContext(),"item 3",Toast.LENGTH_LONG).show();
+                } else if(item.getItemId()==R.id.t3){
+                    Toast.makeText(getApplicationContext(),"item 2",Toast.LENGTH_LONG).show();
+                }else{
+                    return false;
+                }
+                return true;
+
+            // return super.onContextItemSelected(item);
+            }
+
+
+        }
+
+    </xmp>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <xmp>
+      1) XML Code (MainActivity)
+
+      <?xml version="1.0" encoding="utf-8"?>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="POP UP"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        2) XML code (menu inside res/menu)
+
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <menu xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <item android:title="Item3"
+                android:id="@+id/t2"/>
+            <item android:title="Item2"
+                android:id="@+id/t3"/>
+            <item android:id="@+id/t1"
+            android:title="Item 1"></item>
+        </menu>
+
+
+        3) java Code
+
+
+        package com.example.myapplication;
+
+
+        import androidx.annotation.NonNull;
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.constraintlayout.widget.ConstraintLayout;
+
+        import android.content.Intent;
+        import android.graphics.Color;
+        import android.view.ContextMenu;
+        import android.view.Menu;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.os.Bundle;
+        import android.widget.ListView;
+        import android.widget.PopupMenu;
+        import android.widget.Toast;
+
+        public class MainActivity extends AppCompatActivity {
+            private ListView listView;
+            private ArrayAdapter<String> arrayAdapter;
+            private ConstraintLayout layout;
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_main);
+                Button b= findViewById(R.id.button);
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popupMenu= new PopupMenu(MainActivity.this,b);
+                        popupMenu.getMenuInflater().inflate(R.menu.menumain, popupMenu.getMenu());
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Toast.makeText(MainActivity.this, "you clicked "+item.getTitle(), Toast.LENGTH_SHORT).show();
+                                return true;
+                            }
+                        });
+                        popupMenu.show();
+                    }
+                });
+            }
+
+
+
+
+        }
+
+        </xmp>
+
+</body>
+</html>
